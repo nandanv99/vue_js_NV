@@ -1,121 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <title>Market with Vue_js</title>
+    <style>
+        /* body{
+          background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+          background-size: 400% 400%;
+          animation: gradient 15s ease infinite;
+          height: 100vh;
+        }
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+          } */
+          @media only screen and (max-width: 600px) {
+            input{
+              width: 100%;
+            }
+          }
+    </style>
   </head>
-  <body class="bg-dark" >
-    <div class="container mt-5 mb-5">
-        <h1 class="text-center text-white my-5">Learning Vue3_js !! Ńv</h1>
-        <h6 class="text-center text-white mt-0">part_1</h6>
-
-        <hr class="text-white">
-        <div class="row" id="app">
-          <h1 class="text-white text-center"><u>Two way binding of element with vue_js</u></h1>
-            <!-- <div class="col-12 text-center" id="app" style="background-color: plum;">
-                Name: {{ message }}
-            </div> -->
-            <h3 class="text-white text-center mt-2" id="app">Content written is : {{ message }}</h3>
-            <input type="text" placeholder="Enter your name :" v-model="message" class="text-center mt-3 bg-trans" name="" id="" />
-            <!-- How to use v-if in frontend  -->
-            <h1 class="text-white text-center" v-if="isvisible=false"> cool </h1>
-            <hr>
-            <!-- handling frontend varibale with vue_js -->
-            <hr class="text-white">
-            <div class="row">
-              <div class="col text-center">
-                <h1 class="text-white text-center"><u>Handling frontend varibale with vue_js</u></h1>
-                <button class="btn btn-success mt-3 text-center" style="width: 500px;" v-on:click="add=add+1">click to add</button>
-                <h4 id="addone" class="text-white text-center">{{add}}</h4>
-              </div>
-            </div>
-            <div class="input-group">
-              <span class="input-group-text">enter to add(+100)</span>
-              <textarea @keyup.enter="togglebox" placeholder="press enter to add 100" class="form-control" aria-label="With textarea"></textarea>
-            </div>
-            <hr class="text-white mt-3">
-            <h1 class="text-white text-center"><u>Using for loop </u></h1>
-            <p v-for="str in inputs" class=" text-center text-white">{{ str }}</p>
-            <hr class="text-white">
-            <h1 class="text-white text-center"><u>using custom vue component with vue_js_component</u></h1>
-            <login-form />
+  <body class="bg-dark">
+    <div id="app">
+      <div class="row my-4 text-center">
+        <div class="col-8">
+          <h1 class="text-white text-center mt-2">Market</h1>
         </div>
-
-
+        <div class="col-3 mt-3">
+          <h5 class="text-white">CART({{items()}})</h5>
+        </div>
+      </div>
+      <div class="container text-center">
+        <div v-for="(pro ,i) in inventory" :key="pro.id" class="carddcustom">
+          <div class="row py-3">
+            <div class="col-6">
+              <h3 class="text-white mb-3">{{pro.name}}</h3>
+            </div>
+            <div class="col-3">
+              <input
+                type="number"
+                v-model="pro.Q"
+                class="text-black"
+                placeholder="no:"
+              />
+            </div>
+            <div class="col-3">
+              <button class="btn btn-success" @click="addtocart(pro.name,i,pro.Q)">+ cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center">
+        <div class="row mt-4">
+          <div class="col-12">
+            <button @click="placeorder()" class="btn btn-primary btn-lg mb-4">
+              Place order
+            </button>
+          </div>
+        </div>
+      </div>
+      <slidebar
+        v-if="showslidebar"
+        :inventory="inventory"
+        :fruits="fruits"
+        :veggies="veggies"
+        :cart="cart"
+      />
     </div>
-    <hr>
-    
-    <script src="https://unpkg.com/vue@next"></script>
 
-    <script>
-      let app = Vue.createApp({
-        data() {
-          return {
-            message: "",
-            isvisible:true,
-            inputs:['nandan','legendryzzz','z4codes.herokuapp.com'],
-            add:0,
-          };
-        },
-        methods:{
-          togglebox:function(){
-            this.add=this.add+100
-          }
-        }
-      });
-      app.component('login-form',{
-        template:`
-              <div class="container text-center text-white mt-5" style="width:20%">
-                <h3 class="mb-4">{{title}}</h3>
-                <form @submit.prevent="handlesubmit" >
-                  <div class="row">
-                  <div class="col text-center">
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" v-model="email" aria-describedby="emailHelp">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" v-model="pass" id="exampleInputPassword1">
-                  </div>
-                  <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                  </div>
-                </form>
-              </div>
-        `,
-        data(){
-          return{
-            title:"login-form with vue_js",
-            email:'',
-            pass:''
-          }
-        },
-        methods:{
-          handlesubmit:function(){
-            console.log('submitted');
-            alert('Name: '+this.email+' password: '+this.pass);
-          }
-        }
-      })
-      app.mount("#app")
-    </script>
+    <script src="https://unpkg.com/vue@3"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script>
+      let app = Vue.createApp({
+        data() {
+          return {
+            message: "Hello Vue!",
+            showslidebar: false,
+            fruits: {
+              apple: 0,
+              banana: 0,
+            },
+            veggies: {
+              carrot: 0,
+              tomato: 0,
+            },
+            inventory: [],
+            cart: {
+
+            },
+            total: 0,
+          };
+        },
+        methods: {
+          addtocart(name ,index,quant){
+            console.log(name,index,quant)
+            if(!this.cart[name]) this.cart[name]=0
+            this.cart[name]+=quant
+            console.log(this.cart)
+          },
+          placeorder() {
+            this.showslidebar = !this.showslidebar;
+            console.log("slidebar", this.showslidebar);
+          },
+          items(){
+            const items=Object.keys(this.cart).length
+            return items
+          },
+        },
+        async mounted() {
+          const res = await fetch("/grocery.json");
+          const data = await res.json();
+          console.log(data);
+          this.inventory = data;
+        },
+      });
+      app.component("slidebar", {
+        props: ["inventory","cart"],
+        methods:{
+          getprice(name){
+            const product=this.inventory.find((q)=>{
+              return q.name === name
+            })
+            return product.price
+          },
+          gettotal(name,quant){
+            const product=this.inventory.find((q)=>{
+              return q.name === name
+            })
+            const tot=product.price*quant.toFixed(2)
+            return tot.toFixed(2)
+          },
+          totalsum(){
+            const total=Object.entries(this.cart).reduce((acc,curr,index) =>{
+              return acc+(curr[1]*this.getprice(curr[0]))
+            },0)
+            return total.toFixed(2)
+          },
+        },
+        template: ` 
+                <div class="wrapper text-center">
+                    <div class="container text-center">
+                      <hr />
+                      <h1 class="text-white mb-4">Total bill</h1>
+                      <div class="row py-4">
+                        <div class="col-5">
+                          <h3 class="text-white">Name</h3>
+                        </div>
+                        <div class="col-2">
+                          <h3 class="text-white">Price</h3>
+                        </div>
+                        <div class="col-2">
+                          <h3 class="text-white">Quantity</h3>
+                        </div>
+                        <div class="col-2">
+                          <h3 class="text-white">Total</h3>
+                        </div>
+                      </div>
+                      <div v-for="(quant,key,i) in cart" :key="i" class="row">
+                        <div class="col-5">
+                          <h6 class="text-white">{{key}}</h6>
+                        </div>
+                        <div class="col-2">
+                          <h6 class="text-white">\${{ getprice(key) }}</h6>
+                        </div>
+                        <div class="col-2">
+                          <h6 class="text-white">\${{quant}}</h6>
+                        </div>
+                        <div class="col-2">
+                          <h6 class="text-white">\${{gettotal(key,quant)}}</h6>
+                        </div>
+                      </div>
+                      <hr class="text-white"/>
+                      <div class="row">
+                        <div class="col-6">
+                          <h4 class="text-white"><b>Total :</b></h4>
+                        </div>
+                        <div class="col-6">
+                          <h4 class="text-white">
+                            <b
+                              >$: {{totalsum()}}</b
+                            >
+                          </h4>
+                        </div>
+                      </div>
+                      <hr class="text-white"/>
+                    </div>
+              </div>`,
+      });
+      app.mount("#app");
+    </script>
   </body>
 </html>
