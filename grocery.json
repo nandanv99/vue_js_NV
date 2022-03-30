@@ -33,5 +33,12 @@
     "price": 7.2,
     "type": "veg",
     "Q":""
+},
+{
+    "id": 6,
+    "name": "Cabbage",
+    "price": 2.2,
+    "type": "veg",
+    "Q":""
 }
 ]
