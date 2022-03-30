@@ -135,7 +135,7 @@
           },
         },
         async mounted() {
-          const res = await fetch("vue_js_NV/grocery.json");
+          const res = await fetch("https://nandanv99.github.io/vue_js_NV/grocery.json");
           const data = await res.json();
           console.log(data);
           this.inventory = data;
