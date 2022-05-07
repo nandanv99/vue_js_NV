@@ -40,5 +40,12 @@
     "price": 2.2,
     "type": "veg",
     "Q":""
+},
+{
+    "id": 7,
+    "name": "charry",
+    "price": 10.2,
+    "type": "veg",
+    "Q":""
 }
 ]
