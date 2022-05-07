@@ -40,5 +40,12 @@
     "price": 2.2,
     "type": "veg",
     "Q":""
-}
+},
+{
+    "id": 7,
+    "name": "Charry",
+    "price": 5.1,
+    "type": "fruit",
+    "Q":""
+},
 ]
