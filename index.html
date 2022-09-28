@@ -98,6 +98,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      //Heree are some function of vue.js
       let app = Vue.createApp({
         data() {
           return {
@@ -118,6 +119,7 @@
             total: 0,
           };
         },
+        //called some method to show new changes like add to cart
         methods: {
           addtocart(name ,index,quant){
             console.log(name,index,quant)
@@ -126,6 +128,7 @@
             console.log(this.cart)
           },
           placeorder() {
+            //this function will add the grocery to your slidebar
             this.showslidebar = !this.showslidebar;
             console.log("slidebar", this.showslidebar);
           },
